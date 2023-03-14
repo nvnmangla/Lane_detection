@@ -1,8 +1,23 @@
-Download folder in your desired directory
-Find <path> in <solution.py> and change it to your own directory
-change the value of flag for 1st and 2nd problem
-run <solution,py>
+# Histogram Equalization and Lane Detection
+This Repository consists of two Projects 
+## Histogram Equalization
+#### Introduction
 
-links to videos 
+Histogram is a graphical representation of the intensity distribution of
+an image. In simple terms, it represents the number of pixels for each
+intensity value considered. Sometimes, images are taken in very dark or
+poor lightning conditions. An example of poor exposure image is given
+below in Fig 1
 
-https://drive.google.com/drive/folders/1283zI9gIIDcGXvEA3DYCC2vtdZy4FzyD?usp=sharing
+![Poor Exposure Image](https://github.com/nvnmangla/Lane_detection/blob/9961ec55cd0a6bf3d274ec43a5f537895c4e526b/adaptive_hist_data/0000000000.png)*Poor Exposure Image*
+
+
+
+
+#### Running Instructions
+```
+git clone git@github.com:nvnmangla/Lane_detection.git
+cd Lane_detection/
+
+
+```
