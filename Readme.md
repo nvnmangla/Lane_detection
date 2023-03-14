@@ -38,7 +38,7 @@ Birds Eye                  |   Sliding Window
 Back projection was done using inverse of previously computed homography matrix H.
 
 ### Results 
-![Lane Detection](https://github.com/nvnmangla/Lane_detection/blob/f1fa955894fd08cf82624ce3907d64812f7e17e9/lane_results/window2.png)
+![Results Lane](https://github.com/nvnmangla/Lane_detection/blob/8021551a8c520245f66921fab215610a662420a5/lane_results/curved.gif)
 
 #### Running Instructions
 ```
