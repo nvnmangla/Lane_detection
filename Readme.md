@@ -27,10 +27,11 @@ A bird’s-eye view is an elevated view of an object from above, with a perspect
 ![Birds Eye View](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/frame.png)*Building Frame for Birds Eye View*
 
 Then Homography was performed using corners of the above frame and a portrait rectangle.
-
+Solarized dark             |  Solarized Ocean
+:-------------------------:|:-------------------------:
 
 ![Birds Eye](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png) | 
-![Sliding Window](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png)*Sliding Window*
+![Sliding Window](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png)
 
 
 
