@@ -11,6 +11,12 @@ below in Fig 1
 
 ![Poor Exposure Image](https://github.com/nvnmangla/Lane_detection/blob/9961ec55cd0a6bf3d274ec43a5f537895c4e526b/adaptive_hist_data/0000000000.png)*Poor Exposure Image*
 
+Histogram equalisation helps to enhance the intensity level of pixels with poor exposure.It also used to enhance the contrast in the image.
+The Histogram for above image is shown in Fig 2
+
+![Histogram Image](https://github.com/nvnmangla/Lane_detection/blob/9961ec55cd0a6bf3d274ec43a5f537895c4e526b/adaptive_hist_data/0000000000.png)*Poor Exposure Image*
+
+
 
 
 
