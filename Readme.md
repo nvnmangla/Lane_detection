@@ -20,6 +20,20 @@ The Histogram for above image is shown in Fig 2 and 3
 
 ![Adaptive Histogram Image](https://github.com/nvnmangla/Lane_detection/blob/4c706aea1bdcc41b9dd47496411d2abc8a0d73b7/histogram_results/adaptive.png)*Image after Adaptive Histogram equalization*
 
+## Lane Detection
+### Bird Eye View
+A bird’s-eye view is an elevated view of an object from above, with a perspective as though the observer were a bird. For this I used a constant size "Parking frame" as shown in the Fig. 4 as target area.
+
+![Birds Eye View](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/frame.png)*Building Frame for Birds Eye View*
+
+Then Homography was performed using corners of the above frame and a portrait rectangle.
+
+
+![Birds Eye](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png)*Birds Eye View*
+
+Now we use sliding window to  detect Lanes
+
+![Sliding Window](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png)*Sliding Window*
 
 
 
