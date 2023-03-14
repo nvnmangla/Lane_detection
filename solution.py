@@ -6,6 +6,7 @@ import math
 import cv2
 import numpy as np
 import sympy
+from tqdm import tqdm
 
 
 
@@ -35,8 +36,8 @@ def adaptive_his(image,window,climit,channel=None):
 
          
 def window(img,flag):
+    
     img[:,:2] = 0
-    # img = np.flipud(img)
     cdst = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
     way = []
     
@@ -52,13 +53,14 @@ def window(img,flag):
     xpts = []
     ypts = []
     for k in range(20):
-        win = img[i-(k+1)*s:i-(k)*s,solid-4:solid+4]
+        # i_ = 
+        win = img[int(i-(k+1)*s):int(i-(k)*s),int(solid-4):int(solid+4)]
         p =  np.where(win > 0)
         
         if len(p[1]) != 0:
             p = [l+solid-4 for l in p[1]]
             cdst = cv2.rectangle(cdst,((solid-10),i-k*s),((solid+10),round(i-(k+1)*s)),(255,255,0),1)
-            solid = round(np.mean(p))
+            solid = int(np.mean(p))
             xpts.append(round(i-(k+0.5)*s))
             ypts.append(solid)
 
@@ -214,65 +216,64 @@ def sobel(img):
 ###### Problem 1 ############
 #############################
 
-#######################################
-path = "/home/naveen/ENPM673/namngla_project2/"
-#######################################
-
-
 Parser = argparse.ArgumentParser()
-Parser.add_argument('--BasePath', default='/home/naveen/ENPM673/project2/adaptive_hist_data',
+Parser.add_argument('--BasePath', default='adaptive_hist_data',
+                    help='Give your path')
+
+Parser.add_argument('--isHist', default=False,
                     help='Give your path')
 
 Args = Parser.parse_args()
 BasePath = Args.BasePath
+isHist = Args.isHist
 
-images = [cv2.imread(file) for file in sorted(glob.glob(str(BasePath)+'/*.png'))]
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+if isHist:
+    images = [cv2.imread(file) for file in sorted(glob.glob(str(BasePath)+'/*.png'))]
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 
-i, j, k = images[0].shape
-out1 = cv2.VideoWriter(path + 'normal.mp4', fourcc, 5.0, (j, i))
+    i, j, k = images[0].shape
+    out1 = cv2.VideoWriter('histogram_results/normal.mp4', fourcc, 5.0, (j, i))
 
-out = cv2.VideoWriter(path + 'adaptive.mp4', fourcc, 5.0, (j, i))
+    out = cv2.VideoWriter('histogram_results/adaptive.mp4', fourcc, 5.0, (j, i))
 
-kernel = (1/8)*np.array([[0,1,0],[1,4,1],[0,1,0]])
+    kernel = (1/8)*np.array([[0,1,0],[1,4,1],[0,1,0]])
 
-for im in images:
-    img = copy.deepcopy(im)
-    his = copy.deepcopy(im)
-    for c in range(3):
-        his[:,:,c] = histogram(his,channel=c)
-        img[:,:,c] = adaptive_his(img,8,60,channel=c)
-    
-    
-    im_v = cv2.vconcat([img,his,im])
-    
-    
-    cv2.imwrite(path+"Acorrected.png", img)
-    out1.write(his)
-    
-    out.write(img)
-    
-out1.release()
-out.release()
+    print("Running Histogram")
+    for im in tqdm(images):
+        img = copy.deepcopy(im)
+        his = copy.deepcopy(im)
+        for c in range(3):
+            his[:,:,c] = histogram(his,channel=c)
+            img[:,:,c] = adaptive_his(img,8,60,channel=c)
+        im_v = cv2.vconcat([img,his,im])
+        cv2.imwrite("histogram_results/adaptive.png", img)
+        out1.write(his)
+        
+        out.write(img)
+        
+    out1.release()
+    out.release()
 
+#########################################
 ##########   Problem 2,3 ################
+#########################################
 
 flag =  0  ########## Change flag for desired output
 
 if flag ==1:
-    output = "lane1.mp4"
+    output = "lane_results/straight.mp4"
    
-    cap = cv2.VideoCapture(path+'whiteline.mp4')
+    cap = cv2.VideoCapture('lane_inputs/whiteline.mp4')
     
 else:
-    output = "lane2.mp4"
-    cap = cv2.VideoCapture(path+'challenge.mp4')
+    output = "lane_results/curved.mp4"
+    cap = cv2.VideoCapture('lane_inputs/challenge.mp4')
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 
 width = int(cap.get(3))
 height = int(cap.get(4))
 fps = cap.get(5)
-lanevid= cv2.VideoWriter(path + output, fourcc, fps, (width, height))
+lanevid= cv2.VideoWriter(output, fourcc, fps, (width, height))
 
 
 ######################################
@@ -285,7 +286,8 @@ while(ret):
     frames.append(frame)
 
 n = 0
-for frame in frames:
+print("Detecting Lanes")
+for frame in tqdm(frames):
     n+=1
     test = copy.deepcopy(frame)
     img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -294,28 +296,27 @@ for frame in frames:
     
     src = src.reshape((-1, 1, 2))
     cv2.polylines(frame, [np.int32(src)], True, (0, 0, 255), 3)
-    cv2.imwrite(path + "frame.png",frame)
+    cv2.imwrite("lane_results/frame.png",frame)
     H, _ = cv2.findHomography(src, dest)
     
     out = cv2.warpPerspective(
         img, H, (int(dest[2][0]), int(dest[2][1])), flags=cv2.INTER_LINEAR)
-    cv2.imwrite(path + "out.png",out)
+    cv2.imwrite("lane_results/out.png",out)
 
    
     dst = cv2.Canny(out,150,255)
-    cv2.imwrite(path + "canny.png",dst)
+    cv2.imwrite("lane_results/canny.png",dst)
 
     kernel = np.ones((5,5),np.uint8)
     dst =  cv2.dilate(dst, kernel, iterations=1)
-    cv2.imwrite(path + "dialate.png",dst)
+    cv2.imwrite("lane_results/dialate.png",dst)
 
     a,b = dst.shape
 
-    rpoints,r,RR,detectr,right= window(dst[:,:b//2],flag)
-    lpoints,c,RL,detectl,left= window(dst[:,b//2:],flag) 
-    cv2.imwrite(path+"window2.png",cv2.hconcat([right,left]))
+    rpoints,r,RR,detectr,right= window(dst[:,:int(b//2)],flag)
+    lpoints,c,RL,detectl,left= window(dst[:,int(b//2):],flag) 
+    cv2.imwrite("lane_results/window2.png",cv2.hconcat([right,left]))
 
-    print('Left R =' + str(RR)+"  Right R = "+str(RL))
     if detectr and detectl:         
         lpoints = [(p[0]+b//2,p[1]) for p in lpoints]
         his = []
@@ -332,14 +333,8 @@ for frame in frames:
         lpoints = his[2]
         c = his[3]
         RR = his[4]
-
-
     cdst = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)
-    
-    
-    
     lane = np.zeros_like(cdst)
-    
     ben = np.argmax([len(r),len(c)])
     
     if ben ==0:
@@ -353,8 +348,6 @@ for frame in frames:
     for p in lpoints:
         cv2.circle(lane,(int(p[0]), int(p[1])), 2, c1, -1)
 
-    
-    
     warpes = cv2.warpPerspective(
         lane, np.linalg.inv(H), (test.shape[1],frame.shape[0]), flags=cv2.INTER_LINEAR)
     test = cv2.addWeighted(test.astype(np.uint8),0.5,warpes.astype(np.uint8),0.5,0)
@@ -366,25 +359,17 @@ for frame in frames:
     else:
         text = ' Going Straight'
         
-    
     font = cv2.FONT_HERSHEY_SIMPLEX
     
     org = (5, 30)
-    
-    
     fontScale = 0.5
-    
-    
     color = (0, 0, 255)
-    
     thickness = 2
-    
-  
     test = cv2.putText(test, text, org, font, fontScale, 
                     color, thickness, cv2.LINE_AA, False)
     lanevid.write(test)
-
-    cv2.imshow("lane2",test)
+    
+    cv2.imshow("lane",test)
     cv2.waitKey(100)
 
 lanevid.release()
