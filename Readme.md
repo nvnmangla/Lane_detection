@@ -14,7 +14,7 @@ below in Fig 1
 Histogram equalisation helps to enhance the intensity level of pixels with poor exposure.It also used to enhance the contrast in the image.
 The Histogram for above image is shown in Fig 2
 
-![Histogram Image](https://github.com/nvnmangla/Lane_detection/blob/9961ec55cd0a6bf3d274ec43a5f537895c4e526b/adaptive_hist_data/0000000000.png)*Poor Exposure Image*
+![Histogram Image](https://github.com/nvnmangla/Lane_detection/blob/729b4dba8c5547eb3486fa24cbde8e61903ad2a1/histogram_results/result_hist.png)*Image after Histogram equalization*
 
 
 
@@ -24,6 +24,13 @@ The Histogram for above image is shown in Fig 2
 ```
 git clone git@github.com:nvnmangla/Lane_detection.git
 cd Lane_detection/
+```
+To run Histogram
+```
+python3 solution.py --isHist=True
 
-
+```
+Else
+```
+python3 solution.py
 ```
