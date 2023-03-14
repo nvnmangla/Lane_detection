@@ -29,10 +29,7 @@ A bird’s-eye view is an elevated view of an object from above, with a perspect
 Then Homography was performed using corners of the above frame and a portrait rectangle.
 
 
-![Birds Eye](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png)*Birds Eye View*
-
-Now we use sliding window to  detect Lanes
-
+![Birds Eye](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png) | 
 ![Sliding Window](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png)*Sliding Window*
 
 
