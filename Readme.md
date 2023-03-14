@@ -31,7 +31,7 @@ Birds Eye                  |   Sliding Window
 :-------------------------:|:-------------------------:
 
 ![Birds Eye](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png) | 
-![Sliding Window](https://github.com/nvnmangla/Lane_detection/blob/68e2af93689eaaecfb461f7350eb54c6883f94ed/lane_results/out.png)
+![Sliding Window](https://github.com/nvnmangla/Lane_detection/blob/f1fa955894fd08cf82624ce3907d64812f7e17e9/lane_results/window2.png)
 
 
 
