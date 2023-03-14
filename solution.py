@@ -5,8 +5,6 @@ import glob
 import math
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.pylab as plot
 import sympy
 
 
@@ -142,8 +140,7 @@ def  histogram(image,climit=None,channel=None):
                 if pal == 0:
                     break 
     
-    # plot.plot(*zip(*sorted(intensity.items())))
-    # plt.savefig(path + "histogram.png")
+
 
     intensity = {key: intensity[key] for key in sorted(intensity.keys())}
     N = img.shape[0]*img.shape[1]
@@ -222,41 +219,41 @@ path = "/home/naveen/ENPM673/namngla_project2/"
 #######################################
 
 
-# Parser = argparse.ArgumentParser()
-# Parser.add_argument('--BasePath', default='/home/naveen/ENPM673/project2/adaptive_hist_data',
-#                     help='Give your path')
+Parser = argparse.ArgumentParser()
+Parser.add_argument('--BasePath', default='/home/naveen/ENPM673/project2/adaptive_hist_data',
+                    help='Give your path')
 
-# Args = Parser.parse_args()
-# BasePath = Args.BasePath
+Args = Parser.parse_args()
+BasePath = Args.BasePath
 
-# images = [cv2.imread(file) for file in sorted(glob.glob(str(BasePath)+'/*.png'))]
-# fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+images = [cv2.imread(file) for file in sorted(glob.glob(str(BasePath)+'/*.png'))]
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 
-# i, j, k = images[0].shape
-# out1 = cv2.VideoWriter(path + 'normal.mp4', fourcc, 5.0, (j, i))
+i, j, k = images[0].shape
+out1 = cv2.VideoWriter(path + 'normal.mp4', fourcc, 5.0, (j, i))
 
-# out = cv2.VideoWriter(path + 'adaptive.mp4', fourcc, 5.0, (j, i))
+out = cv2.VideoWriter(path + 'adaptive.mp4', fourcc, 5.0, (j, i))
 
-# kernel = (1/8)*np.array([[0,1,0],[1,4,1],[0,1,0]])
+kernel = (1/8)*np.array([[0,1,0],[1,4,1],[0,1,0]])
 
-# for im in images:
-#     img = copy.deepcopy(im)
-#     his = copy.deepcopy(im)
-#     for c in range(3):
-#         his[:,:,c] = histogram(his,channel=c)
-#         img[:,:,c] = adaptive_his(img,8,60,channel=c)
+for im in images:
+    img = copy.deepcopy(im)
+    his = copy.deepcopy(im)
+    for c in range(3):
+        his[:,:,c] = histogram(his,channel=c)
+        img[:,:,c] = adaptive_his(img,8,60,channel=c)
     
     
-#     im_v = cv2.vconcat([img,his,im])
+    im_v = cv2.vconcat([img,his,im])
     
     
-#     cv2.imwrite(path+"Acorrected.png", img)
-#     out1.write(his)
+    cv2.imwrite(path+"Acorrected.png", img)
+    out1.write(his)
     
-#     out.write(img)
+    out.write(img)
     
-# out1.release()
-# out.release()
+out1.release()
+out.release()
 
 ##########   Problem 2,3 ################
 
